@@ -28,7 +28,7 @@ network systems, and the web applications.
 ## Connect with Me
 
 - LinkedIn: [Elliot Nkwama on LinkedIn](https://linkedin.com/in/elliot-nkwama-084a07252/)
-- Email: [Elliot Nkwama on LinkedIn](thisguyhack@gmail.com)
+- Email: [Elliot Nkwama's email](thisguyhack@gmail.com)
 
 
 
