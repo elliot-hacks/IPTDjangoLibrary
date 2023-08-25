@@ -4,7 +4,20 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('home', views.home, name='home'),
+    path('book_list', views.book_list, name='book_list'),
+    path('book_list2', views.book_list2, name='book_list2'),
+    path('search', views.search_books, name='search'),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact'),
+    path('comment', views.comment, name='comment'),
+    path('borrow_book', views.borrow_book, name='borrow_book'),
+    path('team', views.team, name='team'),
+    path('terms', views.terms, name='terms'),
+    path('help', views.help, name='help'),
+    path('FAQs', views.FAQs, name='FAQs'),
+    path('testimonial', views.testimonial, name='testimonial'),
+    path('error', views.error, name='error'),
+    path('sort', views.sort_books, name='sort'),
     path('login', views.u_login, name='login'),
     path('register', views.u_register, name='register'),
 ]

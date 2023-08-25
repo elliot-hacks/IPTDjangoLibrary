@@ -1,0 +1,12 @@
+{% extends "book_list.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<form action="{% url 'sort_books' %}" method="GET">
+    <select name="sort_option" id="">
+        <option value="title">Title</option>
+        <option value="author">Aurthor</option>
+        <option value="category">Category</option>
+    </select>
+</form>
+{% endblock %}

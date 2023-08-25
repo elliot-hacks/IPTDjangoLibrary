@@ -1,0 +1,9 @@
+{% extends "book_list.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<form action="{% url 'search_books' %}" method="GET">
+    <input type="text" name="query" placeholder="Search Books">
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

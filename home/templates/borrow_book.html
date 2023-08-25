@@ -1,0 +1,20 @@
+{% extends "book_list2.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<!--Actually add a button to books-->
+<div class="card" style="width: 400px;">
+    <div class="card-body">
+        <img class="img-fluid" src="{{ book.cover.url }}" alt="{{ book.title }}">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">{{ book.title }}</h5>
+                                <h6>
+                                    {{ book.description }}
+                                </h6>
+                                <small class="text-primary">{{ book.category }}</small>
+                                <input type="submit" />                                  
+                                    <a href="{% url 'borrow_book' book.id %}"></a>
+                            </div>
+    </div>
+</div>
+{% endblock %}

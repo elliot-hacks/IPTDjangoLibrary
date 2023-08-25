@@ -1,0 +1,27 @@
+{% load static %}
+{% block list %}
+{% load crispy_forms_tags %}
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Categories</h6>
+            <h1 class="mb-5">Books Categories</h1>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-7 col-md-6">
+                <div class="row g-3">
+                    {% for book in books %}
+                    <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.3s">
+                        <a class="position-relative d-block overflow-hidden" href="{% url 'borrow_book' %}">
+                            <img class="img-fluid" src="{{ book.cover.url }}" alt="{{ book.title }}">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">{{ book.title }}</h5>
+                                <small class="text-primary">{{ book.category }}</small>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock list %}

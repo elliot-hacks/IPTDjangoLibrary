@@ -1,24 +1,15 @@
-{% extends "home.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block content %}
-{% load crispy_forms_tags %} 
-        </div> 
-        <div id="y">
-            <div id="l">
-                <h1 style=" text-align: center; color: #2c7ad6;">STUDENT</h1>
-                <div id="student">
-                    <form action="" method="POST">
-                    <!--php if (isset($errorMessage)): ?-->
-                   <p class="error">
-                    <!--php echo $errorMessage; --></p>
-                        
-                    {% csrf_token %}
-                    {{ register_form | crispy }} 
-                        <a href=""><input type="submit" value="SAVE" name="submit" style="border: none;width: 103%; height: 30px; background-color: #2c7ad6;"></a>
-                        <a href="#" style="color:blue; text-decoration: none;"><p >forget password</p></a>
-                        </form>
-                </div>
-            </div>
-        </div> 
+{% load crispy_forms_tags %}
+<i class="fa-solid fa-user"></i>
+<div>
+    <form action="" method="POST">
+        <h1 style=" text-align: center; color: #2c7ad6;">Register</h1> 
+            {% csrf_token %}
+            {{ register_form | crispy }}
+            <input type="submit"/>
+        <a href="login" style="color:gold; text-decoration: none;"><p >Arlerdy registered, Login</p></a>
+    </form>
 </div>
 {% endblock %}
