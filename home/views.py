@@ -61,12 +61,14 @@ def u_register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("home:login")
+            return redirect("login")
         else:
             messages.error(request, "Unsuccessful registration. Invalid information.")
     else:
         form = UserRegistrationForm()
     return render(request=request, template_name="registration/register.html", context={"register_form": form})
+
+
 
 def u_login(request):
     if request.method == "POST":
@@ -78,7 +80,14 @@ def u_login(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                # Update the redirect URL as needed
+                
+                # Check if the user is staff
+                if user.is_staff:
+                    # Redirect staff users to the admin page
+                    return redirect('admin:index')  # You can customize this URL
+                else:
+                    # Redirect other users to the book_list page
+                    return redirect('book_list')  # You should replace 'book_list' with your actual URL name
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -86,6 +95,7 @@ def u_login(request):
     else:
         form = AuthenticationForm()
     return render(request=request, template_name="registration/login.html", context={"login_form": form})
+
 
 
 def sort_books(request):
@@ -122,16 +132,16 @@ def search_books(request):
 
 
 @login_required(login_url='login')
-def borrow_book(request, book_id):
-    book=get_object_or_404(Book, book_id)
+def borrow_book(request):
+    book = get_object_or_404(Book)
 
-    if book.available_copies>0 and book.available:
-        borrowed_book=BorrowedBook(book=book, borrower=request.user)
-        borrow_book.save()
-        book.available_copies-=1
+    if book.available > 0 and book.available:
+        borrowed_book = BorrowedBook(book=book, borrower=request.user)
+        borrowed_book.save()
+        book.available -= 1
         book.save()
 
-        messages.success(request, f"The book is ready for you 'book.title' .")
+        messages.success(request, f"The book is ready for you '{book.title}'.")
         return redirect('book_list')
     else:
         messages.error(request, f"'{book.title}' is not available for borrowing.")
