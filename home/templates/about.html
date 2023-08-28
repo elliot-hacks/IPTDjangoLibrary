@@ -1,5 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
-{% block about %}
+{% block content %}
 {% load crispy_forms_tags %}
 <div class="container">
     <div class="row g-5">
@@ -33,8 +34,8 @@
                     <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
                 </div>
             </div>
-            <a class="btn btn-primary py-3 px-5 mt-2" href="{% url 'login' %}">Read More</a>
+            <a class="btn btn-primary py-3 px-5 mt-2" href="{% url 'book' %}">Read More</a>
         </div>
     </div>
 </div>
-{% endblock about %}
+{% endblock %}

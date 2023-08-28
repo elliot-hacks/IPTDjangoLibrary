@@ -15,3 +15,8 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(models.Collection)
 class CollectionAdmin(admin.ModelAdmin):
     list_display = ['title','description']
+
+
+@admin.register(models.BorrowedBook)
+class BorrowedBookAdmin(admin.ModelAdmin):
+    list_display = ['book', 'borrower', 'borrowed_date', 'due_date', 'returned']

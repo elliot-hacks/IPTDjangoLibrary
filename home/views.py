@@ -7,11 +7,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from .models import Book, BorrowedBook
 from django.db.models import Q
 from django.contrib import messages
+from datetime import timedelta
 #from django.http import HTTPResponse
 
 # Create your views here.
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 def about(request):
     return render(request, 'about.html')
@@ -49,7 +50,7 @@ def book_list(request):
     return render(request, 'book_list.html', {'books': books})
 
 
-def book_list2(request):
+def book(request):
     books = Book.objects.prefetch_related('collection').all()
     return render(request, 'book_list2.html', {'books': books})
 
@@ -135,7 +136,7 @@ def search_books(request):
 def borrow_book(request):
     book = get_object_or_404(Book)
 
-    if book.available > 0 and book.available:
+    if book.available > 0:
         borrowed_book = BorrowedBook(book=book, borrower=request.user)
         borrowed_book.save()
         book.available -= 1

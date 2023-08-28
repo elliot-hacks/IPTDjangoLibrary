@@ -8,7 +8,7 @@ class Collection(models.Model):
     description=models.TextField
 
     def __str__(self) -> str:
-        return f'{self.title} {self.description}'
+        return f'{self.title}'
 
 
 class Book(models.Model):
@@ -20,21 +20,29 @@ class Book(models.Model):
     description=models.TextField
 
     def __str__(self) -> str:
-        return f'{self.title} {self.arthor} {self.description} {self.available}'
+        return f'{self.title} {self.arthor} {self.available}'
 
 
 class BorrowedBook(models.Model):
     book=models.ForeignKey(Book, on_delete=models.PROTECT)
     borrower=models.ForeignKey(User, on_delete=models.PROTECT)
     borrowed_date=models.DateTimeField(auto_now_add=True)
-    due_date=models.DateTimeField() #Calculated based on Library policy
+    due_date=models.DateTimeField('calculate_due_date') #Calculated based on Library policy
     returned=models.BooleanField(default=False)
-
 
     def calculate_due_date(self):
         self.due_date=self.borrowed_date + timedelta(days=14)
         self.save()
 
-
+ 
     def __str__(self) -> str:
         return f"{self.borrower.username}: {self.book.title}"
+
+
+class bookComment(models.Model):
+    borrower=models.ForeignKey(User, on_delete=models.CASCADE)
+    books=models.ForeignKey(Book, on_delete=models.CASCADE)
+    comment=models.TextField
+
+    def __str__(self) -> str:
+        return f"{self.borrower}"
