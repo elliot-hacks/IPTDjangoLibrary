@@ -7,6 +7,26 @@
         <h6 class="section-title bg-white text-center text-primary px-3">Books</h6>
         <h1 class="mb-5">Popular Books</h1>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" method="GET">
+                <label for="sort">Sort by:</label>
+                <select id="sort" name="sort">
+                    <option value="title">Title</option>
+                    <option value="arthor">Author</option>
+                    <!-- Add more sorting options as needed -->
+                </select>
+                <button type="submit">Sort</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form action="" method="GET">
+                <label for="query">Search:</label>
+                <input type="text" id="query" name="query" placeholder="Enter keywords">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     <div class="row g-4 justify-content-center">
         {% for book in books %}
         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">

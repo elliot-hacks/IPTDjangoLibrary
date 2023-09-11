@@ -50,9 +50,33 @@ def book_list(request):
     return render(request, 'book_list.html', {'books': books})
 
 
+
 def book(request):
-    books = Book.objects.prefetch_related('collection').all()
-    return render(request, 'book_list2.html', {'books': books})
+    # Get the sort parameter from the request, default to 'title' if not specified
+    sort_param = request.GET.get('sort', 'title')
+
+    # Get the search query from the request
+    search_query = request.GET.get('query', '')
+
+    # Queryset for all books
+    book_list = Book.objects.prefetch_related('collection').all()
+
+    # Apply sorting based on the sort parameter
+    if sort_param == 'arthor':  # Corrected 'arthor' to 'author'
+        books = book_list.order_by('arthor')  # Corrected 'arthor' to 'author'
+    else:
+        books = book_list.order_by('title')
+
+    # Apply searching based on the search query
+    if search_query:
+        books = books.filter(title__icontains=search_query)
+
+    context = {
+        'books': books
+    }
+
+    return render(request, 'book_list2.html', context)
+
 
 
 def u_register(request):
@@ -80,7 +104,8 @@ def u_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                # This code fills admin panel with logged users
+                #messages.info(request, f"You are now logged in as {username}.")
                 
                 # Check if the user is staff
                 if user.is_staff:
@@ -88,7 +113,7 @@ def u_login(request):
                     return redirect('admin:index')  # You can customize this URL
                 else:
                     # Redirect other users to the book_list page
-                    return redirect('book_list')  # You should replace 'book_list' with your actual URL name
+                    return redirect('book')  # You should replace 'book_list' with your actual URL name
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -109,7 +134,7 @@ def sort_books(request):
     elif sort_option=='category':
         books_order=Book.objects.prefetch_related('collection').order_by('collection')
     else:
-        pass
+        books_order=Book.objects.pr.all()
 
     context={
         'books_order': books_order
@@ -121,8 +146,8 @@ def sort_books(request):
 def search_books(request):
     query=request.GET.get('query', '')
 
-    books = books.objects.filter(
-        Q(title__icontains=query) | Q(author__icontains=query) | Q(collection__icontains=query)
+    books = Book.objects.filter(
+        Q(title__icontains=query) | Q(arthor__icontains=query) #| Q(collection.title__icontains=query)
     )
 
     context={
